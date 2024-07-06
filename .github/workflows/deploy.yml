@@ -10,7 +10,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & cache dependencies
+        id: my-load-and-cache-step
         uses: ./.github/actions/cached-deps # gh will automatically look for action.yml
+        with:
+          my-caching: 'false'
+      - name: Output information
+        run: echo "Cache used? ${{ steps.my-load-and-cache-step.outputs.my-used-cache }}"
       - name: Lint code
         run: npm run lint
   test:
